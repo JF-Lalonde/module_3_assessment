@@ -10,5 +10,4 @@ class StoreService
     @total_stores = info[:total]
     info[:stores]
   end
-
 end
