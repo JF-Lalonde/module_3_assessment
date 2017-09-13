@@ -6,7 +6,9 @@ class StoreService
 
   def return_stores
     response = @conn.get("/v1/stores(area(#{@zipcode},25))?format=json&show=longName,city,distance,phone,storeType&pageSize=10&apiKey=#{ENV["API_KEY"]}")
-    stores = JSON.parse(response.body, symbolize_names: true)[:stores]
+    info = JSON.parse(response.body, symbolize_names: true)
+    @total_stores = info[:total]
+    info[:stores]
   end
 
 end

@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
-  def index
+  def create
+    byebug
     @stores = Store.find_stores(params[:search])
   end
 end
