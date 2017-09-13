@@ -24,6 +24,6 @@ feature "User can find BestBuy stores" do
     expect(page).to have_css(".city")
     expect(page).to have_css(".distance")
     expect(page).to have_css(".phone_number")
-    expect(page).to have_css(".story_type")
+    expect(page).to have_css(".store_type")
   end
 end
