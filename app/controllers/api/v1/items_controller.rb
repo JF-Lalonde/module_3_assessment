@@ -5,6 +5,21 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def show
-    render json: Item.find(params[:id]), except: [:created_at, :updated_at]
+    render json: Item.find(params[:id])
+  end
+
+  def create
+    render json: Item.create(item_params)
+  end
+
+  def destroy
+    Item.delete(params[:id])
+    redirect_to root_path
+  end
+
+  private
+
+  def item_params
+    params.permit(:name, :description, :image_url)
   end
 end
