@@ -15,7 +15,7 @@ feature "User can find BestBuy stores" do
   it "by searching with zipcode" do
     visit "/"
     fill_in "search_bar", with: "80202"
-    click_button "Search"
+    page.find(".btn-default").click
 
     expect(current_path).to eq("/search")
     expect(page).to have_content("17 Total Stores")
