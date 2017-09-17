@@ -5,16 +5,16 @@ describe "When a user makes an API call" do
 #I receive a 200 JSON response containing all items
 #And each item has an id, name, description, and image_url but not the created_at or updated_at
   it "returns multiple items" do
-    items = create_list(:item, 3)
-    item = items.first
+    create_list(:item, 3)
 
     get "/api/v1/items"
 
     expect(response).to be_success
+
+    items = JSON.parse(response.body)
     expect(items.count).to eq(3)
-    expect(item.name).to eq("SomeItem")
-    expect(item.description).to eq("It itemizes really well")
-    expect(item.image_url).to eq("photoshop.com")
+    expect(items.first["name"]).to eq("SomeItem")
+    expect(items.last["description"]).to eq("It itemizes really well")
   end
 
   #When I send a GET request to `/api/v1/items/1`
@@ -38,20 +38,23 @@ describe "When a user makes an API call" do
   it "creates a new item" do
     item_params = {name: "NewItem", description: "Better and shinier", image_url: "coolitem.com"}
 
-    post "/api/v1/items", params: { item: item_params }
+    post "/api/v1/items", item_params
+
+    item = Item.last
 
     expect(response).to be_success
-    expect(Item.last.name).to eq("NewItem")
+    expect(Item.last["name"]).to eq("NewItem")
   end
 
 #When I send a DELETE request to `/api/v1/items/1`
 #I receive a 204 JSON response if the record is successfully deleted
 
   it "deletes an existing item" do
-    item = create(:item)
-    last_name = Item.last.name
+    id = create(:item).id
 
-    delete "/api/v1/items/#{item.id}"
+    expect(Item.count).to eq(1)
+
+    delete "/api/v1/items/#{id}"
 
     expect(response).to be_success
     expect(Item.count).to eq(0)

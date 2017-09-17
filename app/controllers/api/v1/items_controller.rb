@@ -1,7 +1,7 @@
 class Api::V1::ItemsController < ApplicationController
+  protect_from_forgery with: :null_session
   def index
     render json: Item.all
-    head 200
   end
 
   def show
@@ -14,7 +14,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def destroy
     Item.delete(params[:id])
-    redirect_to root_path
+    head 204
   end
 
   private

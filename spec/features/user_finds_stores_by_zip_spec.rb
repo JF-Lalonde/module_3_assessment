@@ -14,7 +14,7 @@ require "rails_helper"
 feature "User can find BestBuy stores" do
   it "by searching with zipcode" do
     visit "/"
-    find("#search-form").set("80202")
+    fill_in 'search', with: "80202"
     page.find(".btn-default").click
 
     expect(current_path).to eq("/search")

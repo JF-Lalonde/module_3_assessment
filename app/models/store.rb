@@ -19,4 +19,8 @@ class Store
       Store.new(store)
     end
   end
+
+  def self.total_stores(zipcode)
+    StoreService.total_stores(zipcode)
+  end
 end
